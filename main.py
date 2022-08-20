@@ -1,25 +1,13 @@
-import networkx as nx
-import numpy as np
 import torch
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
+from torch_geometric.data import InMemoryDataset, Data
+from sklearn.model_selection import train_test_split
+import torch_geometric.transforms as T
 
-# load graph from networkx library
-G = nx.karate_club_graph()
+from datasets import KarateDataset
 
-# retrieve the labels for each node
-labels = np.asarray([G.nodes[i]['club'] != 'Mr. Hi' for i in G.nodes]).astype(np.int64)
+dataset = KarateDataset()
+data = dataset[0]
 
-# create edge index from
-adj = nx.to_scipy_sparse_matrix(G).tocoo()
-row = torch.from_numpy(adj.row.astype(np.int64)).to(torch.long)
-col = torch.from_numpy(adj.col.astype(np.int64)).to(torch.long)
-edge_index = torch.stack([row, col], dim=0)
-
-# using degree as embedding
-embeddings = np.array(list(dict(G.degree()).values()))
-
-# normalizing degree values
-scale = StandardScaler()
-embeddings = scale.fit_transform(embeddings.reshape(-1,1))
-
-print(G)
+print(dataset)
+print(data)
