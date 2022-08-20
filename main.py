@@ -1,12 +1,25 @@
+import networkx as nx
+import numpy as np
 import torch
-from torch_geometric.data import Data
+from sklearn.preprocessing import StandardScaler
 
-edge_index = torch.tensor([[0, 1],
-                           [1, 0],
-                           [1, 2],
-                           [2, 1]], dtype=torch.long)
-x = torch.tensor([[-1], [0], [1]], dtype=torch.float)
+# load graph from networkx library
+G = nx.karate_club_graph()
 
-data = Data(x=x, edge_index=edge_index.t().contiguous())
+# retrieve the labels for each node
+labels = np.asarray([G.nodes[i]['club'] != 'Mr. Hi' for i in G.nodes]).astype(np.int64)
 
-print(data)
+# create edge index from
+adj = nx.to_scipy_sparse_matrix(G).tocoo()
+row = torch.from_numpy(adj.row.astype(np.int64)).to(torch.long)
+col = torch.from_numpy(adj.col.astype(np.int64)).to(torch.long)
+edge_index = torch.stack([row, col], dim=0)
+
+# using degree as embedding
+embeddings = np.array(list(dict(G.degree()).values()))
+
+# normalizing degree values
+scale = StandardScaler()
+embeddings = scale.fit_transform(embeddings.reshape(-1,1)
+
+print(G)
