@@ -20,6 +20,6 @@ embeddings = np.array(list(dict(G.degree()).values()))
 
 # normalizing degree values
 scale = StandardScaler()
-embeddings = scale.fit_transform(embeddings.reshape(-1,1)
+embeddings = scale.fit_transform(embeddings.reshape(-1,1))
 
 print(G)
