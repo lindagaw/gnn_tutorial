@@ -10,7 +10,9 @@ from models import Net
 dataset = KarateDataset()
 data = dataset[0]
 
-model = Net()
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+data =  data.to(device)
+model = Net().to(device)
 
 torch.manual_seed(42)
 

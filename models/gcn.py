@@ -16,9 +16,3 @@ class Net(torch.nn.Module):
         x = F.dropout(x, training=self.training)
         x = self.conv2(x, edge_index)
         return F.log_softmax(x, dim=1)
-
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-data =  data.to(device)
-
-model = Net().to(device)
