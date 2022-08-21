@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
@@ -20,4 +21,4 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 data =  data.to(device)
 
-model = Net().to(device) 
+model = Net().to(device)
