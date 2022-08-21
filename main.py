@@ -84,8 +84,8 @@ from torch_geometric.nn import GCNConv
 class Net(torch.nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.conv1 = GCNConv(data.num_features, 16)
-        self.conv2 = GCNConv(16, int(data.num_classes))
+        self.conv1 = GCNConv(data.num_features, 32)
+        self.conv2 = GCNConv(32, int(data.num_classes))
 
     def forward(self):
         x, edge_index = data.x, data.edge_index
@@ -111,7 +111,7 @@ def train():
   model.train()
   optimizer.zero_grad()
   nll_loss = F.nll_loss(model()[data.train_mask], data.y[data.train_mask]).backward()
-  print('nll_loss'.format(nll_loss))
+  print('nll_loss {}'.format(nll_loss))
   optimizer.step()
 
 @torch.no_grad()
